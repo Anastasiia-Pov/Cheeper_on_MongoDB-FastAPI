@@ -1,0 +1,8 @@
+.env
+__pycache__
+cheeper_env
+src/__pycache__
+src/messages/__pycache__
+src/auth/__pycache__
+src/auth/schemas.py
+.DS_Store
