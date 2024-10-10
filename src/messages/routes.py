@@ -21,7 +21,6 @@ async def add_new_message(message: Message):
     """
     try:
         result = await Message.insert(message)
-        # print(result)
         return {
             "message": "New message created successfully."
         }
@@ -38,7 +37,6 @@ async def get_messages(username: str):
     try:
         result = await Message.find({"username": username}).to_list()
         if result:
-            # print(result)
             return result
         else:
             return {"message": "Error 404: No messages found."}
@@ -57,8 +55,9 @@ async def get_messages_in_range(username: str,
     - **to_date**: end of range, type datetime (written in format like YYYY-MM-DD)
     """
     try:
-        result = await Message.find(Message.username == username,
-                                    from_date <= Message.updated_at <= to_date).to_list()
+        result = await Message.find({"username": username,
+                                     "updated_at": {"$gte": from_date,
+                                                    "$lte": to_date}}).to_list()
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -72,9 +71,7 @@ async def get_messageid(id: str):
     """
     try:
         result = await Message.get(id)
-        # print(result)
         if result:
-            # print(result)
             return result
         else:
             return {"message": "Error 404: No message found."}
@@ -92,7 +89,6 @@ async def edit_message(id: str,
     """
     try:
         result = await Message.get(id)
-        # print(result)
         if result:
             await result.set({Message.text: upd_text,
                               Message.updated_at: datetime.now()})
