@@ -4,6 +4,7 @@ from beanie import init_beanie
 from contextlib import asynccontextmanager
 from messages.routes import message_router
 from auth.views import auth_router
+from auth.friends import friends_router
 from mongo_db import startup_db_client
 
 
@@ -22,8 +23,10 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-app.include_router(message_router)
+
 app.include_router(auth_router)
+app.include_router(friends_router)
+app.include_router(message_router)
 
 
 origins = [
