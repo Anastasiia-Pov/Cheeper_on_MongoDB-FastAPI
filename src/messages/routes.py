@@ -41,7 +41,7 @@ async def get_messages(username: str):
             # print(result)
             return result
         else:
-            return {"message": "Error 404: No tasks found."}
+            return {"message": "Error 404: No messages found."}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -98,7 +98,7 @@ async def edit_message(id: str,
                               Message.updated_at: datetime.now()})
             return {"message": "Message updated successfully."}
         else:
-            return {"message": "Error 404: No task found."}
+            return {"message": "Error 404: No message found."}
     except (ValueError, beanie.exceptions.DocumentNotFound):
         return {"message": "Can't replace a non existing document"}
 
