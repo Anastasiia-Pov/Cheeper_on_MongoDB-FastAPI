@@ -1,4 +1,5 @@
 import logging
+from service import hash_password, pass_validation
 from mongo_db import User, ReadUser
 from fastapi import APIRouter, HTTPException
 
@@ -29,6 +30,10 @@ async def add_new_user(new_user: User):
             return {
                 "message": "Username already registered. Please, change username."}
         else:
+            check_password = await pass_validation(new_user.hashed_password)
+            if check_password:
+                return check_password
+            new_user.hashed_password = await hash_password(new_user.hashed_password)
             result = await User.insert(new_user)
             return {"message": "New user created successfully."}
     except Exception as e:
