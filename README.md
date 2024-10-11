@@ -23,4 +23,4 @@ Cheeper-project
 
 ### Scheme of the Cheeper app
 
-<img src="https://github.com/Anastasiia-Pov/Cheeper_on_MongoDB-FastAPI/blob/main/requirements.txt>
+<img src="https://github.com/Anastasiia-Pov/Cheeper_on_MongoDB-FastAPI/blob/main/assets/Cheeper.jpg>
