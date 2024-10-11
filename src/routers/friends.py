@@ -1,14 +1,8 @@
 from datetime import datetime
 import logging
-import secrets
-import uuid
 from operator import attrgetter
-from typing import Annotated, Any
-from time import time
 from mongo_db import User, ReadUser, FriendsRequests, Friend
-from fastapi import (APIRouter, Depends, HTTPException, status, Header,
-                     Response, Cookie)
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi import APIRouter, HTTPException
 from beanie.odm.operators.find.logical import Or
 
 

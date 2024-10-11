@@ -1,15 +1,6 @@
-from datetime import datetime
 import logging
-import secrets
-import uuid
-from operator import attrgetter
-from typing import Annotated, Any
-from time import time
-from mongo_db import User, ReadUser, FriendsRequests, Friend
-from fastapi import (APIRouter, Depends, HTTPException, status, Header,
-                     Response, Cookie)
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from beanie.odm.operators.find.logical import Or
+from mongo_db import User, ReadUser
+from fastapi import APIRouter, HTTPException
 
 
 auth_router = APIRouter(prefix="/auth", tags=["Auth"])

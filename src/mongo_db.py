@@ -1,13 +1,10 @@
-from typing import List, Optional
+from typing import List
 import motor.motor_asyncio
 from beanie import Document
-from fastapi_users.db import BeanieBaseUser, BeanieUserDatabase
 from config import MONGO_HOST, MONGO_PORT, MONGO_DB
 from datetime import datetime
 from beanie import init_beanie
-from pydantic import Field, BaseModel, SecretStr, EmailStr
-from pydantic.json_schema import SkipJsonSchema
-
+from pydantic import BaseModel, EmailStr
 
 DATABASE_URL = f"mongodb://{MONGO_HOST}:{MONGO_PORT}"
 

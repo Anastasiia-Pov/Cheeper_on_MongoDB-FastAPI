@@ -1,10 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from beanie import init_beanie
 from contextlib import asynccontextmanager
-from messages.routes import message_router
-from auth.views import auth_router
-from auth.friends import friends_router
+from routers.messages import message_router
+from routers.users import auth_router
+from routers.friends import friends_router
 from mongo_db import startup_db_client
 
 

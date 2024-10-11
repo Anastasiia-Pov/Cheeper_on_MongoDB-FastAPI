@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from fastapi import APIRouter
 from mongo_db import Message
 import beanie
-from datetime import datetime, date
+from datetime import datetime
 
 
 message_router = APIRouter(tags=['Messages'])
