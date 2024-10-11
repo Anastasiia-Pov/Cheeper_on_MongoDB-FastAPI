@@ -6,3 +6,4 @@ src/messages
 src/auth
 src/auth/schemas.py
 .DS_Store
+.git

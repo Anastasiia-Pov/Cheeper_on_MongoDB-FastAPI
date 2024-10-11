@@ -1,0 +1,1619 @@
+{
+	"info": {
+		"_postman_id": "ebee270d-bf30-43c8-967a-f816c880fdb1",
+		"name": "Cheeper",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35168221"
+	},
+	"item": [
+		{
+			"name": "auth/user",
+			"item": [
+				{
+					"name": "Add new user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"postmantestuser\",\n  \"username\": \"postmantestuser\",\n  \"email\": \"postmantestuser@example.com\",\n  \"hashed_password\": \"postmantestuser\",\n  \"created_at\": \"2024-10-11T18:13:34.040001\",\n  \"is_active\": true,\n  \"is_superuser\": false,\n  \"is_verified\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"user"
+							]
+						},
+						"description": "new_user is a class of model User has the following fields:\n- **id**: exclude id from swagger to avoid double key error\n- **name**: name of a new user, type str\n- **username**: username of a user, type str\n- **email**: email of a user, type EmailStr\n- **hashed_password**: email of a user, type str\n- **created_at**: datetime of creating a user, type datetime.now()\n- **friends**: list of friends, type List[Friend] (model of data Friends)\n- **is_active**: by default is True, type bool\n- **is_superuser**: by default is False, type bool\n- **is_verified**: by default is False, type bool"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"<string>\",\n  \"username\": \"<string>\",\n  \"email\": \"<email>\",\n  \"hashed_password\": \"<string>\",\n  \"_id\": \"<string>\",\n  \"created_at\": \"2024-10-11T18:13:34.040001\",\n  \"is_active\": true,\n  \"is_superuser\": false,\n  \"is_verified\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Validation Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"<string>\",\n  \"username\": \"<string>\",\n  \"email\": \"<email>\",\n  \"hashed_password\": \"<string>\",\n  \"_id\": \"<string>\",\n  \"created_at\": \"2024-10-11T18:13:34.040001\",\n  \"is_active\": true,\n  \"is_superuser\": false,\n  \"is_verified\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"user"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get user info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/user/:username",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"user",
+								":username"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "postmantestuser",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "- **username**: username of a user"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/auth/user/:username",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"user",
+										":username"
+									],
+									"variable": [
+										{
+											"key": "username",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Validation Error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/auth/user/:username",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"user",
+										":username"
+									],
+									"variable": [
+										{
+											"key": "username",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "friends",
+			"item": [
+				{
+					"name": "requests",
+					"item": [
+						{
+							"name": "{username}",
+							"item": [
+								{
+									"name": "Send friends request",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"request_sender\": \"postmantestuser\",\n  \"request_getter\": \"admin\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/friends/requests/:username",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"friends",
+												"requests",
+												":username"
+											],
+											"variable": [
+												{
+													"key": "username",
+													"value": ""
+												}
+											]
+										},
+										"description": "request is a class of model FriendsRequests has the following fields:\n- **id**: exclude id from swagger to avoid double key error\n- **request_sender**: username of a user who sends request, type str\n- **request_getter**: username of a user who gets request, type str"
+									},
+									"response": [
+										{
+											"name": "Successful Response",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"request_sender\": \"<string>\",\n  \"request_getter\": \"<string>\",\n  \"_id\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/friends/requests/:username",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"friends",
+														"requests",
+														":username"
+													],
+													"variable": [
+														{
+															"key": "username"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										},
+										{
+											"name": "Validation Error",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"request_sender\": \"<string>\",\n  \"request_getter\": \"<string>\",\n  \"_id\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/friends/requests/:username",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"friends",
+														"requests",
+														":username"
+													],
+													"variable": [
+														{
+															"key": "username"
+														}
+													]
+												}
+											},
+											"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+											"code": 422,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+										}
+									]
+								},
+								{
+									"name": "Get friend requests",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/friends/requests/:username",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"friends",
+												"requests",
+												":username"
+											],
+											"variable": [
+												{
+													"key": "username",
+													"value": "postmantestuser",
+													"description": "(Required) "
+												}
+											]
+										},
+										"description": "- **username**: username of a user"
+									},
+									"response": [
+										{
+											"name": "Successful Response",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/friends/requests/:username",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"friends",
+														"requests",
+														":username"
+													],
+													"variable": [
+														{
+															"key": "username",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										},
+										{
+											"name": "Validation Error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/friends/requests/:username",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"friends",
+														"requests",
+														":username"
+													],
+													"variable": [
+														{
+															"key": "username",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+											"code": 422,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Accept friends request",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"request_sender\": \"postmantestuser\",\n  \"request_getter\": \"admin\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/friends/requests",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"friends",
+										"requests"
+									]
+								},
+								"description": "request is a class of model FriendsRequests has the following fields:\n- **id**: exclude id from swagger to avoid double key error\n- **request_sender**: username of a user who sends request, type str\n- **request_getter**: username of a user who gets request, type str"
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"request_sender\": \"<string>\",\n  \"request_getter\": \"<string>\",\n  \"_id\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/friends/requests",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"friends",
+												"requests"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"request_sender\": \"<string>\",\n  \"request_getter\": \"<string>\",\n  \"_id\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/friends/requests",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"friends",
+												"requests"
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Get user's friends",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/friends/:username",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"friends",
+								":username"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "postmantestuser",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "- **username**: username of a user"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/friends/:username",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"friends",
+										":username"
+									],
+									"variable": [
+										{
+											"key": "username",
+											"value": "",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Validation Error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/friends/:username",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"friends",
+										":username"
+									],
+									"variable": [
+										{
+											"key": "username",
+											"value": "",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get number of user's friends",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/friends/numfriends/:username",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"friends",
+								"numfriends",
+								":username"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "postmantestuser",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "- **username**: username of a user"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/friends/numfriends/:username",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"friends",
+										"numfriends",
+										":username"
+									],
+									"variable": [
+										{
+											"key": "username",
+											"value": "",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Validation Error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/friends/numfriends/:username",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"friends",
+										"numfriends",
+										":username"
+									],
+									"variable": [
+										{
+											"key": "username",
+											"value": "",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "message",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "Get message by id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/message/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"message",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "- **id**: id of a message, type str"
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/message/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"message",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/message/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"message",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Edit message text",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/message/:id?upd_text=Updated Hello World!",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"message",
+										":id"
+									],
+									"query": [
+										{
+											"key": "upd_text",
+											"value": "Updated Hello World!",
+											"description": "(Required) "
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "67094326443d41685d5b976e",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "- **id**: id of a message to update, type str\n- **upd_text**: text of an updated message, type str"
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/message/:id?upd_text=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"message",
+												":id"
+											],
+											"query": [
+												{
+													"key": "upd_text",
+													"value": "<string>"
+												}
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/message/:id?upd_text=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"message",
+												":id"
+											],
+											"query": [
+												{
+													"key": "upd_text",
+													"value": "<string>"
+												}
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete message by id",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/message/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"message",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "67094326443d41685d5b976e",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "- **id**: id of a message, type str"
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/message/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"message",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/message/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"message",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Add new message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"Hello World!\",\n  \"username\": \"postmantestuser\",\n  \"created_at\": \"2024-10-11T18:13:34.042628\",\n  \"updated_at\": \"2024-10-11T18:13:34.042630\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/message",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"message"
+							]
+						},
+						"description": "message is a class of model Message has the following fields:\n- **id**: exclude id from swagger to avoid double key error\n- **text**: text of a message, type str\n- **created_at**: date and time of posting, type datetime.now()\n- **updated_at**: date and time of updating, type datetime.now()\n- **username**: username, type str"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"text\": \"<string>\",\n  \"username\": \"<string>\",\n  \"_id\": \"<string>\",\n  \"created_at\": \"2024-10-11T18:13:34.042628\",\n  \"updated_at\": \"2024-10-11T18:13:34.042630\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/message",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"message"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Validation Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"text\": \"<string>\",\n  \"username\": \"<string>\",\n  \"_id\": \"<string>\",\n  \"created_at\": \"2024-10-11T18:13:34.042628\",\n  \"updated_at\": \"2024-10-11T18:13:34.042630\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/message",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"message"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all messages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/message/:username",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"message",
+								":username"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "postmantestuser",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "- **username**: username, type str"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/message/:username",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"message",
+										":username"
+									],
+									"variable": [
+										{
+											"key": "username",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Validation Error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/message/:username",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"message",
+										":username"
+									],
+									"variable": [
+										{
+											"key": "username",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Get all messages in a given range",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/message_in_range/:username?from_date=2024-10-10&to_date=2024-10-12",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"message_in_range",
+						":username"
+					],
+					"query": [
+						{
+							"key": "from_date",
+							"value": "2024-10-10",
+							"description": "(Required) "
+						},
+						{
+							"key": "to_date",
+							"value": "2024-10-12",
+							"description": "(Required) "
+						}
+					],
+					"variable": [
+						{
+							"key": "username",
+							"value": "postmantestuser",
+							"description": "(Required) "
+						}
+					]
+				},
+				"description": "- **username**: username, type str\n- **from_date**: start of range, type datetime (written in format like YYYY-MM-DD)\n- **to_date**: end of range, type datetime (written in format like YYYY-MM-DD)"
+			},
+			"response": [
+				{
+					"name": "Successful Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/message_in_range/:username?from_date=<dateTime>&to_date=<dateTime>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"message_in_range",
+								":username"
+							],
+							"query": [
+								{
+									"key": "from_date",
+									"value": "<dateTime>"
+								},
+								{
+									"key": "to_date",
+									"value": "<dateTime>"
+								}
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "<string>",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{}"
+				},
+				{
+					"name": "Validation Error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/message_in_range/:username?from_date=<dateTime>&to_date=<dateTime>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"message_in_range",
+								":username"
+							],
+							"query": [
+								{
+									"key": "from_date",
+									"value": "<dateTime>"
+								},
+								{
+									"key": "to_date",
+									"value": "<dateTime>"
+								}
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "<string>",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+					"code": 422,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/",
+			"type": "string"
+		}
+	]
+}
