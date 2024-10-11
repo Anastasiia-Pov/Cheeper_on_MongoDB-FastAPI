@@ -1,7 +1,7 @@
 from datetime import datetime
 import logging
 from operator import attrgetter
-from mongo_db import User, ReadUser, FriendsRequests, Friend
+from models import User, ReadUser, FriendsRequests, Friend
 from fastapi import APIRouter, HTTPException
 from beanie.odm.operators.find.logical import Or
 
