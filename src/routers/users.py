@@ -32,7 +32,7 @@ async def add_new_user(new_user: User):
         else:
             check_password = await pass_validation(new_user.hashed_password)
             if check_password:
-                return check_password
+                return {"message": check_password}
             new_user.hashed_password = await hash_password(new_user.hashed_password)
             result = await User.insert(new_user)
             return {"message": "New user created successfully."}
