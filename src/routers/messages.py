@@ -90,16 +90,12 @@ async def edit_message(id: str,
         raise HTTPException(status_code=500, detail=str(e))
 
 
-
 # delete message by id
 @message_router.delete("/message/{id}",
                        status_code=status.HTTP_200_OK,
                        summary='Delete message by id')
 async def delete_message(id: str,
                          response: Response):
-    """
-    - **id**: id of a message, type str
-    """
     try:
         result = await Message.get(id)
         if result:
