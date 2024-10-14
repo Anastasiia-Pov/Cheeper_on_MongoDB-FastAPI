@@ -103,5 +103,5 @@ async def delete_message(id: str,
             return {"message": "Message deleted successfully."}
         response.status_code = status.HTTP_404_NOT_FOUND
         return {"message": "No message found."}
-    except (ValueError, beanie.exceptions.DocumentNotFound):
-        return {"message": "Can't delete a non existing document"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
