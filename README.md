@@ -24,3 +24,9 @@ Cheeper-project
 ### Scheme of the Cheeper app
 
 <img src="https://github.com/Anastasiia-Pov/Cheeper_on_MongoDB-FastAPI/blob/main/assets/Cheeper.png">
+
+
+### Launch Cheeper app
+- install depandencies from requirements.txt;
+- run virtual environment by command ```source <<dir where virtual environment located>>```;
+- start app being in the ```src``` dir by command ```uvicorn main:app --reload```.
