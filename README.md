@@ -28,5 +28,5 @@ Cheeper-project
 
 ### Launch Cheeper app
 - install depandencies from requirements.txt;
-- run virtual environment by command ```source <<dir where virtual environment located>>```;
+- run virtual environment by command ```source <<dir where virtual environment located/bin/activate>>```;
 - start app being in the ```src``` dir by command ```uvicorn main:app --reload```.
