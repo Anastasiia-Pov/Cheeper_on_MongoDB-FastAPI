@@ -29,9 +29,8 @@ class User(Document):
 class ReadUser(BaseModel):
     name: str
     username: str
-    created_at: datetime
     email: EmailStr
-    friends: List[Friend]
+    # friends: List[Friend]
 
     class Settings:
         projection = {"_id": False}
