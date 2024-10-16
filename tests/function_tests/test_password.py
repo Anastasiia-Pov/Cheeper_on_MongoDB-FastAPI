@@ -1,5 +1,5 @@
 import unittest
-from src.service import pass_validation
+from src.service_for_password import pass_validation
 
 
 class TestPassword(unittest.TestCase):
