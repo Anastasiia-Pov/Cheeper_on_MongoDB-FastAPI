@@ -4,7 +4,6 @@ from datetime import datetime
 from pydantic import BaseModel, EmailStr
 
 
-# Users Models
 class Friend(BaseModel):
     friend: str
     friendship_date: datetime = datetime.now()
@@ -18,6 +17,7 @@ class User(Document):
     hashed_password: str
     created_at: datetime = datetime.now()
     friends: List[Friend] = []
+    liked_posts: List[str] = []
     is_active: bool = True
     is_superuser: bool = False
     is_verified: bool = False
@@ -34,18 +34,6 @@ class ReadUser(BaseModel):
 
     class Settings:
         projection = {"_id": False}
-
-
-# Message Models
-class Message(Document):
-    # id: str = Field(hidden_from_schema=True)
-    text: str
-    created_at: datetime = datetime.now()
-    updated_at: datetime = datetime.now()
-    username: str
-
-    class Settings:
-        name = "Messages"
 
 
 # Requests Models
