@@ -141,6 +141,15 @@ async def test_like_message(client_test: AsyncClient):
     assert msg["message"] == "Liked"
 
 
+async def test_like_message_again(client_test: AsyncClient):
+    response = await client_test.patch(f"messages/like/{message1['_id']}",
+                                       params={"username": user1["username"]})
+    assert response.status_code == 409
+    msg = response.json()
+    print(msg)
+    assert msg["message"] == "Message was already liked."
+
+
 # Delete tests
 async def test_delete_message1(client_test: AsyncClient):
     response = await client_test.delete(f"messages/delete/{message1['_id']}")
