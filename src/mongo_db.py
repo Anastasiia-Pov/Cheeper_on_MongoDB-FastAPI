@@ -1,10 +1,9 @@
 import motor.motor_asyncio
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
-from fastapi_users.db import BeanieBaseUser, BeanieUserDatabase
-
-from models import (User, ReadUser, FriendsRequests,
-                    Message, )
+from fastapi_users.db import BeanieUserDatabase
+from models.user_models import User, FriendsRequests
+from models.message_models import Message
 from config import (MONGO_HOST, MONGO_PORT, MONGO_DB,
                     MONGO_DB_TEST, MONGO_HOST_TEST, MONGO_PORT_TEST)
 
