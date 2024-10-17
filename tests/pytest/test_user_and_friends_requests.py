@@ -40,7 +40,7 @@ friends_request1 = {
 friends_request_for_nonuser = {
     "_id": "5eb7cf5a86d9755df3a6c595",
     "request_sender": user1["username"],
-    "request_getter": 'user2'
+    "request_getter": 'non_existing_user1234'
     }
 
 
@@ -86,7 +86,7 @@ async def test_post_friendsrequest(client_test: AsyncClient):
     assert msg["message"] == "Friend request was sent successfully."
 
 
-# POST friends request again< request already exists
+# POST friends request again, request already exists
 async def test_post_friendsrequest_again(client_test: AsyncClient):
     response = await client_test.post(f"/friends/requests/{user1['username']}",
                                       json=friends_request1)

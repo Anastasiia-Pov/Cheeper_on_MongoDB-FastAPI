@@ -3,7 +3,6 @@ from src.main import app
 from beanie import init_beanie
 from asgi_lifespan import LifespanManager
 from httpx import AsyncClient, ASGITransport
-from src.models import Message, User, FriendsRequests
 from src.config import MONGO_DB_TEST, MONGO_HOST_TEST, MONGO_PORT_TEST
 
 
