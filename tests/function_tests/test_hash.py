@@ -1,5 +1,5 @@
 import unittest
-from src.service_for_password import hash_password
+from src.service.service_for_password import hash_password
 
 
 class TestHash(unittest.TestCase):

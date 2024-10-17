@@ -1,5 +1,5 @@
 import unittest
-from src.service_for_users import check_username
+from src.service.service_for_users import check_username
 
 
 class TestUsername(unittest.TestCase):
