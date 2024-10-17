@@ -1,7 +1,7 @@
 from datetime import datetime
 import logging
 from operator import attrgetter
-from models import User, ReadUser, FriendsRequests, Friend
+from models.user_models import User, ReadUser, FriendsRequests, Friend
 from fastapi import APIRouter, HTTPException, status, Response
 from beanie.odm.operators.find.logical import Or
 
@@ -51,7 +51,7 @@ async def send_request(request: FriendsRequests,
         user_getter = await check_user_existence(request.request_getter)
         if not user_sender or not user_getter:
             response.status_code = status.HTTP_404_NOT_FOUND
-            return {"message": "User not found"}
+            return {"message": "User not found."}
 
         # check if users are already friends
         are_users_friends = await check_friendship(request.request_sender,
@@ -179,6 +179,6 @@ async def get_num_of_friends(username,
             friends_list = result.friends
             return f"User {username} has {len(friends_list)} friends"
         response.status_code = status.HTTP_404_NOT_FOUND
-        return {"message": "Error 404: No user found."}
+        return {"message": "No user found."}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

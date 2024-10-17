@@ -1,17 +1,21 @@
 import beanie
+from fastapi import Depends
+from typing import Annotated
 from mongo_db import Message
 from datetime import datetime
+from models.user_models import User
+from routers.friends import check_user_existence
 from fastapi import APIRouter, HTTPException, status, Response
 
 
-message_router = APIRouter(tags=['Messages'])
+message_router = APIRouter(prefix="/messages", tags=['Messages'])
 
 
 # post new message
-@message_router.post("/messages",
+@message_router.post("/new",
                      status_code=status.HTTP_201_CREATED,
                      summary='Add new message')
-async def add_new_message(message: Message):
+async def add_new_message(message: Message) -> dict:
     try:
         await Message.insert(message)
         return {"message": "New message created successfully."}
@@ -20,23 +24,23 @@ async def add_new_message(message: Message):
 
 
 # get all messages by username
-@message_router.get("/messages/{username}",
+@message_router.get("/by_username/{username}",
                     status_code=status.HTTP_200_OK,
                     summary='Get all messages')
 async def get_messages(username: str,
                        response: Response):
     try:
         result = await Message.find({"username": username}).to_list()
-        if result:
+        if result and await check_user_existence(username):
             return result
         response.status_code = status.HTTP_404_NOT_FOUND
-        return {"message": "No messages found."}
+        return {"message": "Messages not found or user does not exists."}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 # get all messages by username in a given range
-@message_router.get("/messages_in_range/{username}",
+@message_router.get("/in_range/{username}",
                     status_code=status.HTTP_200_OK,
                     summary='Get all messages in a given range')
 async def get_messages_in_range(username: str,
@@ -49,14 +53,14 @@ async def get_messages_in_range(username: str,
                                                     "$lte": to_date}}).to_list()
         if len(result) == 0:
             response.status_code = status.HTTP_404_NOT_FOUND
-            return {"message": "User has not written any messages yet."}
+            return {"message": "User has no messages in a given range."}
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 # get message by id
-@message_router.get("/message/{id}",
+@message_router.get("/by_id/{id}",
                     status_code=status.HTTP_200_OK,
                     summary='Get message by id')
 async def get_message_by_id(id: str,
@@ -72,7 +76,7 @@ async def get_message_by_id(id: str,
 
 
 # edit message by id
-@message_router.patch("/message/{id}",
+@message_router.patch("/update/{id}",
                       status_code=status.HTTP_201_CREATED,
                       summary='Edit message text')
 async def edit_message(id: str,
@@ -90,8 +94,38 @@ async def edit_message(id: str,
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# like a message
+@message_router.patch("/like/{message_id}",
+                      status_code=status.HTTP_200_OK,
+                      summary='Like a message')
+async def like_message(message_id: str,
+                       username: str,
+                       response: Response):
+    try:
+        # Check if the message and user exist
+        check_message_exists = await Message.get(message_id)
+        get_user = await check_user_existence(username)
+
+        if check_message_exists and get_user:
+            # Check if the user has already liked the message
+            if (username not in check_message_exists.likes) and (message_id not in get_user.liked_posts):
+                # Add username to the list of likes for the message
+                check_message_exists.likes.append(username)
+                await check_message_exists.save()
+                get_user.liked_posts.append(message_id)
+                await get_user.save()
+                return {"message": "Liked"}
+            response.status_code = status.HTTP_409_CONFLICT
+            return {"message": "Message was already liked."}
+        # If the message or user is not found
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return {"message": "No message or user found."}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 # delete message by id
-@message_router.delete("/message/{id}",
+@message_router.delete("/delete/{id}",
                        status_code=status.HTTP_200_OK,
                        summary='Delete message by id')
 async def delete_message(id: str,
