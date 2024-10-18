@@ -1,7 +1,7 @@
 from typing import List
 from beanie import Document
 from datetime import datetime
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 
 
 class Friend(BaseModel):
@@ -43,3 +43,12 @@ class FriendsRequests(Document):
 
     class Settings:
         name = "FriendsRequests"
+
+
+class UserSchema(BaseModel):
+    model_config = ConfigDict(strict=True)
+
+    username: str
+    password: bytes
+    email: EmailStr | None = None
+    active: bool = True
