@@ -124,6 +124,24 @@ async def like_message(message_id: str,
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@message_router.get("/liked/{username}",
+                    status_code=status.HTTP_200_OK,
+                    summary='Liked messages')
+async def get_liked_messaged(username: str,
+                             response: Response):
+    try:
+        check_user = await check_user_existence(username)
+        if check_user:
+            if len(check_user.liked_posts) == 0:
+                response.status_code = status.HTTP_404_NOT_FOUND
+                return {"message": "User has not liked any posts yet."}
+            return check_user.liked_posts
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return {"message": "User is not found."}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 # delete message by id
 @message_router.delete("/delete/{id}",
                        status_code=status.HTTP_200_OK,
