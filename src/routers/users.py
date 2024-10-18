@@ -1,7 +1,7 @@
 import logging
 from service.service_for_password import hash_password, pass_validation
 from service.service_for_users import check_username
-from mongo_db import User, ReadUser
+from models.user_models import User, ReadUser
 from fastapi import APIRouter, HTTPException, status, Response
 
 
