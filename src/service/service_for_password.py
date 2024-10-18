@@ -1,10 +1,22 @@
 import hashlib
+import bcrypt
 import re
 
 
-def hash_password(password):
-   hash_object = hashlib.sha256(password.encode('utf-8'))
-   return hash_object.hexdigest()
+def hash_password(password: str) -> bytes:
+    salt = bcrypt.gensalt()
+    pwd_bytes: bytes = password.encode()
+    return bcrypt.hashpw(pwd_bytes, salt)
+#    hash_object = hashlib.sha256(password.encode('utf-8'))
+#    return hash_object.hexdigest()
+
+
+def validate_password(password: str,
+                      hashed_password: bytes) -> bool:
+    if isinstance(hashed_password, str):
+        hashed_password = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(password=password.encode(),
+                          hashed_password=hashed_password)
 
 
 def pass_validation(password):
@@ -32,5 +44,3 @@ def pass_validation(password):
         validation = False
 
     return errors if not validation else None
-
-
