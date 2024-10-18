@@ -3,7 +3,7 @@ __pycache__
 cheeper_env
 src/__pycache__
 src/messages
-src/auth
-src/auth/schemas.py
+src/auth/README.md
 .DS_Store
 .git
+certs
