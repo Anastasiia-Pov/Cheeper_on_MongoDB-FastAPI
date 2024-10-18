@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 from routers.messages import message_router
 from routers.users import auth_router
 from routers.friends import friends_router
+from auth.demo_jwt_auth import jwt_router
 from mongo_db import startup_db_client
 
 
@@ -27,6 +28,7 @@ app = FastAPI(
 app.include_router(auth_router)
 app.include_router(friends_router)
 app.include_router(message_router)
+app.include_router(jwt_router)
 
 
 origins = [
