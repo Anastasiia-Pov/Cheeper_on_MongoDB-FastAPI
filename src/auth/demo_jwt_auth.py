@@ -33,11 +33,3 @@ async def auth_user_jwt(user: UserSchema = Depends(validate_auth_user)):
     token = auth_utils.encode_jwt(jwt_payload)
     return TokenInfo(access_token=token,
                      token_type='Bearer')
-
-
-@jwt_router.get("/login/pass",
-                 status_code=status.HTTP_200_OK,
-                 summary='Authentificationpass')
-async def auth_user_get_pass(username: str):
-    user = await check_user_existence(username)
-    return user.hashed_password
