@@ -1,13 +1,12 @@
-from fastapi import APIRouter, HTTPException, status, Response, Depends, Form
+from fastapi import APIRouter, status, Depends
 from fastapi.security import HTTPBearer
 from models.user_models import UserSchema
 from models.jwt_token import TokenInfo
-from service.service_for_password import validate_password
-from routers.friends import check_user_existence
 from auth.helpers import create_access_token, create_refresh_token
-from auth.validation import (get_current_auth_user,
-                             get_current_auth_user_for_refresh,
-                             get_current_token_payload)
+from auth.validation import (get_current_auth_user_for_refresh,
+                             validate_auth_user,
+                             get_current_token_payload,
+                             get_current_active_auth_user)
 
 http_bearer = HTTPBearer(auto_error=False)
 
@@ -15,27 +14,6 @@ http_bearer = HTTPBearer(auto_error=False)
 jwt_router = APIRouter(prefix="/auth-jwt",
                        tags=["Auth-JWT"],
                        dependencies=[Depends(http_bearer)])
-
-
-async def validate_auth_user(username: str = Form(),
-                             password: str = Form()):
-    unauthed_exc = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                                 detail='Invalid username or password.')
-    user = await check_user_existence(username)
-    if not user:
-        raise unauthed_exc
-    if validate_password(password=password,
-                         hashed_password=user.hashed_password):
-        return user
-    raise unauthed_exc
-
-
-async def get_current_active_auth_user(response: Response,
-                                 user: UserSchema = Depends(get_current_auth_user)):
-    if user.is_active:
-        return user
-    response.status_code = status.HTTP_403_FORBIDDEN
-    return {"message": "User is inactive."}
 
 
 @jwt_router.post("/login",

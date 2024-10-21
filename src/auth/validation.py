@@ -1,12 +1,13 @@
-from fastapi import HTTPException, status, Response, Depends
+from fastapi import HTTPException, status, Response, Depends, Form
 from fastapi.security import OAuth2PasswordBearer
 from jwt.exceptions import InvalidTokenError
 from models.user_models import UserSchema
-from models.jwt_token import TokenInfo
 from auth import utils_jwt as auth_utils
 from routers.friends import check_user_existence
 from auth.helpers import (TOKEN_TYPE_FIELD, ACCESS_TOKEN_TYPE,
                           REFRESH_TOKEN_TYPE)
+from service.service_for_password import validate_password
+from routers.friends import check_user_existence
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth-jwt/login")
@@ -60,3 +61,25 @@ def get_auth_user_from_token_of_type(token_type: str):
 
 get_current_auth_user = get_auth_user_from_token_of_type(ACCESS_TOKEN_TYPE)
 get_current_auth_user_for_refresh = get_auth_user_from_token_of_type(REFRESH_TOKEN_TYPE)
+
+
+async def validate_auth_user(username: str = Form(),
+                             password: str = Form()):
+    unauthed_exc = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                 detail='Invalid username or password.')
+    user = await check_user_existence(username)
+    if not user:
+        raise unauthed_exc
+    if validate_password(password=password,
+                         hashed_password=user.hashed_password):
+        return user
+    raise unauthed_exc
+
+
+async def get_current_active_auth_user(
+        response: Response,
+        user: UserSchema = Depends(get_current_auth_user)):
+    if user.is_active:
+        return user
+    response.status_code = status.HTTP_403_FORBIDDEN
+    return {"message": "User is inactive."}
