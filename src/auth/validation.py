@@ -41,26 +41,30 @@ async def get_user_by_token(payload: dict) -> UserSchema:
                         detail="Token invalid (user not found).")
 
 
-def get_auth_user_from_token_of_type(token_type: str):
-    async def get_auth_user_from_token(payload: dict = Depends(get_current_token_payload)) -> UserSchema:
-        validate_token_type(payload, token_type)
+# def get_auth_user_from_token_of_type(token_type: str):
+#     async def get_auth_user_from_token(payload: dict = Depends(get_current_token_payload)) -> UserSchema:
+#         validate_token_type(payload, token_type)
+#         return await get_user_by_token(payload)
+#     return get_auth_user_from_token
+
+
+class UserGetterFromToken:
+    def __init__(self, token_type: str):
+        self.token_type = token_type
+
+    async def __call__(self,
+                       payload: dict = Depends(get_current_token_payload),
+                       ):
+        validate_token_type(payload, self.token_type)
         return await get_user_by_token(payload)
-    return get_auth_user_from_token
 
 
-# class UserGetterFromToken:
-#     def __init__(self, token_type: str):
-#         self.token_type = token_type
-
-#     def __call__(self,
-#                  payload: dict = Depends(get_current_token_payload),
-#                  ):
-#         validate_token_type(payload, self.token_type)
-#         return get_user_by_token(payload)
+# get_current_auth_user = get_auth_user_from_token_of_type(ACCESS_TOKEN_TYPE)
+# get_current_auth_user_for_refresh = get_auth_user_from_token_of_type(REFRESH_TOKEN_TYPE)
 
 
-get_current_auth_user = get_auth_user_from_token_of_type(ACCESS_TOKEN_TYPE)
-get_current_auth_user_for_refresh = get_auth_user_from_token_of_type(REFRESH_TOKEN_TYPE)
+get_current_auth_user = UserGetterFromToken(ACCESS_TOKEN_TYPE)
+get_current_auth_user_for_refresh = UserGetterFromToken(REFRESH_TOKEN_TYPE)
 
 
 async def validate_auth_user(username: str = Form(),
