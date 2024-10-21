@@ -37,12 +37,16 @@ async def add_new_user(new_user: User,
 
 # get user info by username
 @auth_router.get("/user/{username}", summary='Get user info')
-async def get_user(username: str):
+async def get_user(username: str,
+                   response: Response):
     try:
-        result = await User.find_one({"username": username}).project(ReadUser)
-        if result:
-            return result
-        return {"message": "Error 404: No user found."}
+        user = await User.find_one({"username": username})
+        if user:
+            if user.is_active:
+                return user
+            response.status_code = status.HTTP_403_FORBIDDEN
+            return {"message": "User is inactive."}
+        return {"message": "User inactive"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
