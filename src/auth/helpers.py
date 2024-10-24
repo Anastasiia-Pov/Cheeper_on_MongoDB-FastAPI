@@ -1,5 +1,5 @@
 from auth import utils_jwt as auth_utils
-from models.user_models import UserSchema, User
+from models.user_models import UserSchema
 from datetime import timedelta
 from config import settings
 

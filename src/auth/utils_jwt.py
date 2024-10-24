@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta, timezone
 from config import settings
-import bcrypt
 import jwt
 
 
@@ -8,6 +7,7 @@ import jwt
 # >>> public_key = b"-----BEGIN PUBLIC KEY-----\nMHYwEAYHKoZIzj0CAQYFK4EEAC..."
 
 
+# Encoding JWT
 def encode_jwt(payload: dict,
                private_key: str = settings.auth_jwt.private_key_path.read_text(),
                algorithm: str = settings.auth_jwt.algorithm,
@@ -15,10 +15,11 @@ def encode_jwt(payload: dict,
                expire_timedelta: timedelta | None = None,):
     to_encode = payload.copy()
     now = datetime.now(timezone.utc)
-    if expire_timedelta:
-        expire = now + expire_timedelta
-    else:
-        expire = now + timedelta(minutes=expire_minutes)
+
+    delta = expire_timedelta if expire_timedelta else timedelta(minutes=expire_minutes)
+
+    expire = now + delta
+
     to_encode.update(exp=expire,
                      iat=now)
     encoded = jwt.encode(to_encode,
@@ -27,6 +28,7 @@ def encode_jwt(payload: dict,
     return encoded
 
 
+# Decoding JWT
 def decode_jwt(token: str | bytes,
                public_key: str = settings.auth_jwt.public_key_path.read_text(),
                algorithm: str = settings.auth_jwt.algorithm,):

@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordBearer
 from jwt.exceptions import InvalidTokenError
 from models.user_models import UserSchema
 from auth import utils_jwt as auth_utils
-from routers.friends import check_user_existence
+from routers.helpers import check_user_existence
 from auth.helpers import (TOKEN_TYPE_FIELD, ACCESS_TOKEN_TYPE,
                           REFRESH_TOKEN_TYPE)
 from service.service_for_password import validate_password
@@ -26,6 +26,7 @@ def get_current_token_payload(
         ) -> dict:
     try:
         payload = auth_utils.decode_jwt(token=token)
+        # print(payload)
     except InvalidTokenError as e:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail=f"Invalid token error: {e}")
