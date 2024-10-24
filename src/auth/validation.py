@@ -7,7 +7,6 @@ from routers.friends import check_user_existence
 from auth.helpers import (TOKEN_TYPE_FIELD, ACCESS_TOKEN_TYPE,
                           REFRESH_TOKEN_TYPE)
 from service.service_for_password import validate_password
-from routers.friends import check_user_existence
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth-jwt/login")

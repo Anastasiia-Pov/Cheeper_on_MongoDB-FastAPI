@@ -1,4 +1,3 @@
-import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
@@ -7,6 +6,7 @@ from routers.users import auth_router
 from routers.friends import friends_router
 from auth.demo_jwt_auth import jwt_router
 from mongo_db import startup_db_client
+# payload: dict = Depends(get_current_token_payload)
 
 
 # define a lifespan method for fastapi

@@ -16,6 +16,7 @@ MONGO_PORT_TEST = os.environ.get("MONGO_PORT_TEST")
 MONGO_DB_TEST = os.environ.get("MONGO_DB_TEST")
 
 
+# Settings for authentification JWT
 class AuthJWT(BaseModel):
     private_key_path: Path = BASE_DIR / "certs" / "jwt-private.pem"
     public_key_path: Path = BASE_DIR / "certs" / "jwt-public.pem"
