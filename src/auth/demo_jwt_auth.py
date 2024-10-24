@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status, Depends
+from fastapi import APIRouter, status, Depends, Response
 from fastapi.security import HTTPBearer
 from models.user_models import UserSchema
 from models.jwt_token import TokenInfo
@@ -18,13 +18,16 @@ jwt_router = APIRouter(prefix="/auth-jwt",
 
 @jwt_router.post("/login",
                  status_code=status.HTTP_200_OK,
-                 summary='Authentification',
-                 response_model=TokenInfo)
-async def auth_user_jwt(user: UserSchema = Depends(validate_auth_user)):
+                 summary='Authentification'
+                 )
+async def auth_user_jwt(response: Response,
+                        user: UserSchema = Depends(validate_auth_user)
+                        ):
     access_token = await create_access_token(user)
     refresh_token = await create_refresh_token(user)
-    return TokenInfo(access_token=access_token,
-                     refresh_token=refresh_token)
+    response.set_cookie(key="access-token", value=access_token, httponly=True)
+    # response.set_cookie(key=refresh_token, value="refresh-token", httponly=True)
+    return {"message": "Cookie is set on the browser."}
 
 
 @jwt_router.post("/refresh/",
@@ -48,3 +51,12 @@ async def auth_user_check_self_info(
     return {"username": user.username,
             "email": user.email,
             "logged_in_at": iat}
+
+
+@jwt_router.post("/logout",
+                 status_code=status.HTTP_200_OK,
+                 summary='Logout'
+                 )
+async def logout_user(response: Response):
+    response.delete_cookie("access-token")
+    return {"message": "Cookie deleted successfully."}
