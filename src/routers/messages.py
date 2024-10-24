@@ -1,21 +1,25 @@
 import beanie
-from fastapi import Depends
+from fastapi import Depends, Request
 from typing import Annotated
 from mongo_db import Message
 from datetime import datetime
 from models.user_models import User
-from routers.friends import check_user_existence
+from routers.helpers import check_user_existence
+from auth.validation import get_current_token_payload, oauth2_scheme
 from fastapi import APIRouter, HTTPException, status, Response
 
 
-message_router = APIRouter(prefix="/messages", tags=['Messages'])
+message_router = APIRouter(prefix="/messages",
+                           tags=['Messages'],
+                           dependencies=[Depends(oauth2_scheme)])
 
 
 # post new message
 @message_router.post("/new",
                      status_code=status.HTTP_201_CREATED,
                      summary='Add new message')
-async def add_new_message(message: Message) -> dict:
+async def add_new_message(message: Message,
+                          payload: dict = Depends(get_current_token_payload)) -> dict:
     try:
         await Message.insert(message)
         return {"message": "New message created successfully."}
@@ -28,7 +32,8 @@ async def add_new_message(message: Message) -> dict:
                     status_code=status.HTTP_200_OK,
                     summary='Get all messages')
 async def get_messages(username: str,
-                       response: Response):
+                       response: Response,
+                       payload: dict = Depends(get_current_token_payload)):
     try:
         result = await Message.find({"username": username}).to_list()
         if result and await check_user_existence(username):
@@ -46,7 +51,8 @@ async def get_messages(username: str,
 async def get_messages_in_range(username: str,
                                 from_date: datetime,
                                 to_date: datetime,
-                                response: Response):
+                                response: Response,
+                                payload: dict = Depends(get_current_token_payload)):
     try:
         result = await Message.find({"username": username,
                                      "updated_at": {"$gte": from_date,
@@ -64,7 +70,8 @@ async def get_messages_in_range(username: str,
                     status_code=status.HTTP_200_OK,
                     summary='Get message by id')
 async def get_message_by_id(id: str,
-                            response: Response):
+                            response: Response,
+                            payload: dict = Depends(get_current_token_payload)):
     try:
         result = await Message.get(id)
         if result:
@@ -81,7 +88,8 @@ async def get_message_by_id(id: str,
                       summary='Edit message text')
 async def edit_message(id: str,
                        upd_text: str,
-                       response: Response):
+                       response: Response,
+                       payload: dict = Depends(get_current_token_payload)):
     try:
         result = await Message.get(id)
         if result:
@@ -100,7 +108,8 @@ async def edit_message(id: str,
                       summary='Like a message')
 async def like_message(message_id: str,
                        username: str,
-                       response: Response):
+                       response: Response,
+                       payload: dict = Depends(get_current_token_payload)):
     try:
         # Check if the message and user exist
         check_message_exists = await Message.get(message_id)
@@ -128,7 +137,8 @@ async def like_message(message_id: str,
                     status_code=status.HTTP_200_OK,
                     summary='Liked messages')
 async def get_liked_messaged(username: str,
-                             response: Response):
+                             response: Response,
+                             payload: dict = Depends(get_current_token_payload)):
     try:
         check_user = await check_user_existence(username)
         if check_user:
@@ -147,7 +157,8 @@ async def get_liked_messaged(username: str,
                        status_code=status.HTTP_200_OK,
                        summary='Delete message by id')
 async def delete_message(id: str,
-                         response: Response):
+                         response: Response,
+                         payload: dict = Depends(get_current_token_payload)):
     try:
         result = await Message.get(id)
         if result:
