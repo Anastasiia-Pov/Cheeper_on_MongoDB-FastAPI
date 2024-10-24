@@ -1,42 +1,18 @@
-from datetime import datetime
 import logging
+from datetime import datetime
 from operator import attrgetter
-from models.user_models import User, ReadUser, FriendsRequests, Friend
-from fastapi import APIRouter, HTTPException, status, Response
 from beanie.odm.operators.find.logical import Or
+from fastapi import APIRouter, HTTPException, status, Response, Depends
+
+from auth.validation import get_current_token_payload, oauth2_scheme
+from models.user_models import User, ReadUser, FriendsRequests, Friend
+from routers.helpers import check_friendship, check_user_existence, check_friendsrequest
 
 
-friends_router = APIRouter(prefix="/friends", tags=["Friends"])
+friends_router = APIRouter(prefix="/friends",
+                           tags=["Friends"],
+                           dependencies=[Depends(oauth2_scheme)])
 log = logging.getLogger(__name__)
-
-
-async def check_user_existence(username):
-    user = await User.find_one(User.username == username)
-    return user if user else None
-
-
-# Function to check whether two users are already friends
-async def check_friendship(request_sender: str,
-                           request_getter: str):
-    # Find the request_getter in DB
-    user_getter = await check_user_existence(request_getter)
-
-    # Check if request_sender is already in request_getter's friends list
-    sender_is_friend = any(friend.friend == request_sender for friend in user_getter.friends)
-
-    return sender_is_friend if sender_is_friend else None
-
-
-# Function to check whether friends request already exists
-async def check_friendsrequest(request: FriendsRequests):
-    # check if request already exists for both users
-    check_requests = await FriendsRequests.find_one(Or(
-        {"request_sender": request.request_sender,
-         "request_getter": request.request_getter},
-        {"request_sender": request.request_getter,
-         "request_getter": request.request_sender}))
-
-    return check_requests if check_requests else None
 
 
 # post friend's requests
@@ -44,7 +20,8 @@ async def check_friendsrequest(request: FriendsRequests):
                      status_code=status.HTTP_201_CREATED,
                      summary="Send friends request")
 async def send_request(request: FriendsRequests,
-                       response: Response):
+                       response: Response,
+                       payload: dict = Depends(get_current_token_payload)):
     try:
         # check if users exists
         user_sender = await check_user_existence(request.request_sender)
@@ -78,7 +55,8 @@ async def send_request(request: FriendsRequests,
                     status_code=status.HTTP_200_OK,
                     summary="Get friend requests")
 async def get_request(username: str,
-                      response: Response):
+                      response: Response,
+                      payload: dict = Depends(get_current_token_payload)):
     try:
         # check if users exists
         user_exists = await check_user_existence(username)
@@ -102,7 +80,8 @@ async def get_request(username: str,
                       status_code=status.HTTP_200_OK,
                       summary="Accept friends request")
 async def accept_request(request: FriendsRequests,
-                         response: Response):
+                         response: Response,
+                         payload: dict = Depends(get_current_token_payload)):
     try:
         # check if users exists
         user_sender = await check_user_existence(request.request_sender)
@@ -155,7 +134,8 @@ async def accept_request(request: FriendsRequests,
                     status_code=status.HTTP_200_OK,
                     summary="Get user's friends")
 async def get_friends(username: str,
-                      response: Response):
+                      response: Response,
+                      payload: dict = Depends(get_current_token_payload)):
     try:
         result = await check_user_existence(username)
         if result:
@@ -172,7 +152,8 @@ async def get_friends(username: str,
                     status_code=status.HTTP_200_OK,
                     summary="Get number of user's friends")
 async def get_num_of_friends(username,
-                             response: Response):
+                             response: Response,
+                             payload: dict = Depends(get_current_token_payload)):
     try:
         result = await check_user_existence(username)
         if result:
